@@ -1,6 +1,9 @@
 import {Chess} from 'chess';
 import {Session} from 'meteor/session';
 import {Streamy} from 'meteor/yuukan:streamy';
+import buzz from 'buzz';
+
+
 export let game = new Chess();
 export let board = false;
 
@@ -94,6 +97,21 @@ Template.mainGame.onRendered(()=>{
     Session.set('fen', game.fen());
 
     Streamy.broadcast('game', { fen: game.fen(), turn: game.turn() });
+
+    let rand = _.random(1,3);
+    if(rand == 4){
+      var sound = new buzz.sound("/effects/zombie" + rand, {
+        formats: [ "flac"]
+      });
+    } else {
+      var sound = new buzz.sound("/effects/zombie" + rand, {
+        formats: [ "wav"]
+      });
+    }
+
+
+    console.log(sound);
+    sound.play();
   };
 
   var cfg = {
