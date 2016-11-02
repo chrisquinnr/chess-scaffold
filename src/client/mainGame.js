@@ -4,12 +4,6 @@ import {Streamy} from 'meteor/yuukan:streamy';
 export let game = new Chess();
 export let board = false;
 
-Template.body.helpers({
-  getStats:()=>{
-    return Session.get('fen');
-  }
-});
-
 // Client
 Streamy.on('game', function(data) {
   console.log(data);
@@ -18,15 +12,7 @@ Streamy.on('game', function(data) {
   board.position(game.fen());
 });
 
-Template.body.onRendered(()=>{
-
-  let agent = navigator.userAgent;
-  if(agent.includes('Firefox')){
-    //set to black
-    Session.set('player', 'black');
-  } else {
-    Session.set('player', 'white');
-  }
+Template.mainGame.onRendered(()=>{
 
   var removeGreySquares = function() {
     $('#board .square-55d63').css('background', '');

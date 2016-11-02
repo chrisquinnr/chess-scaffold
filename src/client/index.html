@@ -1,4 +1,11 @@
 <body>
-	<div id="board" style="width: 400px"></div>
-  {{getStats}}
+  {{#if playerID}}
+    {{>mainGame}}
+  {{else}}
+    Welcome to Zombie Chess
+    <p>Choose your side</p>
+    <button class="white">White</button>
+    <button class="black">Zombie</button>
+  {{/if}}
+
 </body>
