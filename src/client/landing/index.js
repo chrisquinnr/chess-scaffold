@@ -14,3 +14,7 @@ Template.body.events({
     Session.set('player', 'black');
   },
 });
+
+Template.body.onRendered(()=>{
+  Session.set('player', false);
+});
