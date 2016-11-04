@@ -13,13 +13,14 @@ Template.mainGame.onRendered(()=>{
 
   let onDragMove = function(newLocation, oldLocation, source,
       piece, position, orientation) {
-    console.log("New location: " + newLocation);
-    console.log("Old location: " + oldLocation);
-    console.log("Source: " + source);
-    console.log("Piece: " + piece);
-    console.log("Position: " + ChessBoard.objToFen(position));
-    console.log("Orientation: " + orientation);
-    console.log("--------------------");
+    // console.log("New location: " + newLocation);
+    // console.log("Old location: " + oldLocation);
+    // console.log("Source: " + source);
+    // console.log("Piece: " + piece);
+    // console.log("Position: " + ChessBoard.objToFen(position));
+    // console.log("Orientation: " + orientation);
+    // console.log("--------------------");
+
   };
 
   let removeGreySquares = function() {
@@ -56,6 +57,8 @@ Template.mainGame.onRendered(()=>{
     if (game.game_over() === true ||
         (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
         (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+
+      gameState.set('over');
       return false;
     }
   };
@@ -73,14 +76,15 @@ Template.mainGame.onRendered(()=>{
     // illegal move
     if (move === null) return 'snapback';
 
-    if(move.captured){
-      $('#board').addClass('shake')
+    console.log(move);
+    if(move && move.captured){
+      $('#board').addClass('shake');
+      let target = move.to;
+      $('[data-square='+target+']').addClass('bomb');
       setTimeout(()=>{
         $('#board').removeClass('shake');
-      },300);
+      },800);
     }
-
-
 
   };
 
@@ -128,6 +132,7 @@ Template.mainGame.onRendered(()=>{
     onDrop: onDrop,
     onMouseoutSquare: onMouseoutSquare,
     onMouseoverSquare: onMouseoverSquare,
+    snapSpeed: 'fast',
     onSnapEnd: onSnapEnd,
     showNotation: false,
     onDragMove: onDragMove
